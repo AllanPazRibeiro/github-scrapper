@@ -1,0 +1,90 @@
+openapi: 3.0.0
+info:
+  title: GitHub Repository Branches API
+  version: 1.0.0
+  description: Endpoint to retrieve repository branches from GitHub based on username.
+paths:
+  /v1/repositories/{username}:
+    get:
+      summary: Get repository branches by username
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+            description: GitHub username
+          description: Username to fetch repository branches
+        - in: query
+          name: sort
+          schema:
+            type: string
+            enum: ['created', 'updated', 'pushed', 'full_name']
+          description: Sort repositories by specified field
+        - in: query
+          name: direction
+          schema:
+            type: string
+            enum: ['asc', 'desc']
+          description: Sort direction (ascending or descending)
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+            maximum: 100
+          description: Number of repositories per page
+        - in: query
+          name: page
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+          description: Page number
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  repoName:
+                    type: string
+                    description: Name of the repository
+                  ownerLogin:
+                    type: string
+                    description: Owner's login
+                  repoBranches:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: Branch name
+                        lastCommitSHA:
+                          type: string
+                          description: Last commit SHA
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: invalid parameters
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Internal Server Error
+          

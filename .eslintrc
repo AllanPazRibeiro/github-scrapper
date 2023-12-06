@@ -1,0 +1,19 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "prettier/prettier": "error",
+    "@typescript-eslint/keyword-spacing": "error",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "no-useless-escape": "off",
+    "prefer-rest-params": "off",
+    "@typescript-eslint/consistent-type-imports": ["error", { "prefer": "type-imports" }]
+  }
+}
