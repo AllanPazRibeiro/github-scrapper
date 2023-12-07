@@ -3,6 +3,7 @@ import { GitHubRepoBranches } from '@application/services/GitHubRepoBranches'
 import { tokens } from '@di/Tokens'
 import {
   badRequest,
+  notFound,
   ok,
   serverError,
 } from '@presentation/http/helpers/HttpHelper'
@@ -56,7 +57,10 @@ export class GitHubController implements Controller {
       }
 
       return ok<GitHubRepoBranchesReturn>(response)
-    } catch (error) {
+    } catch (error: any) {
+      if (error.status === 404) {
+        return notFound()
+      }
       return serverError(error as Error)
     }
   }

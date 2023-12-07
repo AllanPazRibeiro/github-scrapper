@@ -11,6 +11,7 @@ export class HttpClientError extends Error {
   public name = 'HTTPClientError'
   public code: string
   public message: string
+  public status: number = 500
 
   constructor(error: AxiosError) {
     super(undefined)
@@ -22,6 +23,13 @@ export class HttpClientError extends Error {
       this.code = 'unauthorized'
       this.message =
         (error.response?.data as any).suggestedAction || 'Unauthorized'
+    }
+
+    if (error.response?.status === 404) {
+      this.code = 'not found'
+      this.status = error.response?.status
+      this.message =
+        (error.response?.data as any).suggestedAction || 'Resource not found'
     }
 
     if ((error.response?.data as any).code) {

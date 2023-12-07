@@ -48,7 +48,7 @@ export class GitHubRepoBranches {
         return repositories
       } catch (error) {
         console.error(error)
-        throw new Error('Failed to fetch repositories')
+        throw error
       }
     }
   }
